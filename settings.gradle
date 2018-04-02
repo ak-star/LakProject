@@ -1,1 +1,1 @@
-include ':app', ':core', ':remote_web'
+include ':app', ':core', ':remote_web', ':tools'
