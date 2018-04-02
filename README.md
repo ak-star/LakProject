@@ -1,2 +1,2 @@
 # LakProject
-基础项目骨架
+基于Android项目开发的基础框架
