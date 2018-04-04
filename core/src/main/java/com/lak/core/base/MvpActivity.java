@@ -1,41 +1,50 @@
 package com.lak.core.base;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
-import com.lak.core.mvp.MvpPresenter;
 import com.lak.core.mvp.MvpView;
+import com.lak.core.mvp.impl.MvpPresenterImpl;
 
 /**
  * Created by lawrence on 2018/4/3.
  */
 
-public abstract class MvpActivity<T extends MvpPresenter> extends BaseActivity implements MvpView {
+public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<V>> extends BaseActivity {
     // ---------------------------------------------------
-    protected abstract @NonNull T newPresenter();
+    protected abstract V newView();           // 创建mvp的view
+    protected abstract P newPresenter();      // 创建mvp的presenter
 
     // ---------------------------------------------------
-    private T mPresenter;       // mvp中 presenter
+    private V mView;            // mvp中 view
+    private P mPresenter;       // mvp中 presenter
 
     // ---------------------------------------------------
-    protected T presenter() {
+    protected V mvpView() {
+        return mView;
+    }
+    protected P mvpPresenter() {
         return mPresenter;
     }
 
     // ---------------------------------------------------
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = newPresenter();
-        mPresenter.ctx(this).clazzName(sClassName).attach(this);
+        if (mPresenter == null)
+            mPresenter = newPresenter();
+        if (mView == null)
+            mView = newView();
+        mPresenter.clazzName(sClassName).attachView(mView);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mView = null;
         if (mPresenter != null)
-            mPresenter.detach();
+            mPresenter.detachView();
         mPresenter = null;
     }
 }

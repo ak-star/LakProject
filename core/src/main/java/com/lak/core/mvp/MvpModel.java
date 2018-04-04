@@ -3,8 +3,8 @@ package com.lak.core.mvp;
 /**
  * Created by lawrence on 2018/4/3.
  * <p>
- * MVP模式 基础Model
+ * Mvp中model抽象接口
  */
 
-public class MvpModel {
+public interface MvpModel {
 }
