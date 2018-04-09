@@ -1,6 +1,6 @@
 package com.lak.core.mvp.impl;
 
-import com.lak.core.mvp.MvpModel;
+import com.lak.core.mvp.base.MvpModel;
 
 /**
  * Created by lawrence on 2018/4/4.

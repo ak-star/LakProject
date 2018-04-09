@@ -1,18 +1,18 @@
-package com.lak.core.base.activities;
+package com.lak.core.mvp;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 
-import com.lak.core.mvp.MvpView;
+import com.lak.core.base.BaseFragment;
+import com.lak.core.mvp.base.MvpView;
 import com.lak.core.mvp.impl.MvpPresenterImpl;
-import com.lak.core.mvp.support.delegate.MvpDelegate;
+import com.lak.core.mvp.support.contract.callback.MvpDelegateCallback;
 
 /**
- * Created by lawrence on 2018/4/3.
+ * Created by lawrence on 2018/4/9.
  */
 
-public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<V>>
-        extends BaseActivity implements MvpDelegate<V, P>, MvpView {
+public abstract class MvpFragment<V extends MvpView, P extends MvpPresenterImpl<V>>
+        extends BaseFragment implements MvpDelegateCallback<V, P>, MvpView {
     // ---------------------------------------------------
     private P mPresenter;       // mvp中 presenter
 
@@ -33,15 +33,15 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<
     // ---------------------------------------------------
     @SuppressWarnings("unchecked")
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (mPresenter == null)
             mPresenter = newPresenter();
         mPresenter.clazzName(sClassName).attachView(mvpView());
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         if (mPresenter != null)
             mPresenter.detachView();

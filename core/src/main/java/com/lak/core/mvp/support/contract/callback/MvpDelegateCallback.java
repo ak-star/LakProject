@@ -1,13 +1,15 @@
-package com.lak.core.mvp.support.delegate;
+package com.lak.core.mvp.support.contract.callback;
 
-import com.lak.core.mvp.MvpPresenter;
-import com.lak.core.mvp.MvpView;
+import com.lak.core.mvp.base.MvpView;
+import com.lak.core.mvp.impl.MvpPresenterImpl;
 
 /**
  * Created by lawrence on 2018/4/9.
+ * <p>
+ * mvp代理接口类
  */
 
-public interface MvpDelegate<V extends MvpView, P extends MvpPresenter<V>> {
+public interface MvpDelegateCallback<V extends MvpView, P extends MvpPresenterImpl<V>> {
 
     /**
      * 创建Presenter方法

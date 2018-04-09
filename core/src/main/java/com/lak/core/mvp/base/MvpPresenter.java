@@ -1,4 +1,4 @@
-package com.lak.core.mvp;
+package com.lak.core.mvp.base;
 
 /**
  * Created by lawrence on 2018/4/4.

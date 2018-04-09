@@ -1,8 +1,7 @@
-package com.lak.core.base.fragments;
+package com.lak.core.base;
 
 import android.app.Activity;
 import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.app.Fragment;
@@ -33,7 +32,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) { this.mCtx = activity; }
+        this.mCtx = activity;
     }
 
     @Override

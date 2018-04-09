@@ -1,4 +1,4 @@
-package com.lak.core.base.activities;
+package com.lak.core.base;
 
 import android.content.Context;
 import android.os.Bundle;

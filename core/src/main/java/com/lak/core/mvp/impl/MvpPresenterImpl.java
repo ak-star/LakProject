@@ -2,8 +2,8 @@ package com.lak.core.mvp.impl;
 
 import android.content.Context;
 
-import com.lak.core.mvp.MvpPresenter;
-import com.lak.core.mvp.MvpView;
+import com.lak.core.mvp.base.MvpPresenter;
+import com.lak.core.mvp.base.MvpView;
 import com.lak.core.tools.Preconditions;
 
 import java.lang.ref.WeakReference;
