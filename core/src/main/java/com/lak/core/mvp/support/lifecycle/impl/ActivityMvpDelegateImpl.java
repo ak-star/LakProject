@@ -57,14 +57,10 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
     }
 
     @Override
-    public void onResume() {
-
-    }
+    public void onResume() { }
 
     @Override
-    public void onPause() {
-
-    }
+    public void onPause() { }
 
     @Override
     public void onDestroy() {
@@ -72,12 +68,9 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-
-    }
+    public void onSaveInstanceState(Bundle outState) { }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
+    public void onRestoreInstanceState(Bundle savedInstanceState) { }
 
-    }
 }

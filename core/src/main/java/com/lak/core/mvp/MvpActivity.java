@@ -83,4 +83,5 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<
         super.onDestroy();
         mvpDelegate().onDestroy();
     }
+
 }
