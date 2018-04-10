@@ -3,7 +3,9 @@ package com.lak.core.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +20,17 @@ public abstract class BaseFragment extends Fragment {
     protected abstract @LayoutRes int getLayoutId();
 
     // ---------------------------------------------------
-    protected final String sClassName = this.getClass().getSimpleName();
     protected Context mCtx;     // 上下文  文法
     protected View mRootView = null;   // 根View
+
+    // ---------------------------------------------------
+    @Nullable
+    protected <T extends View> T findViewById(@IdRes int resId) {
+        T result = null;
+        if (mRootView != null)
+            result = mRootView.findViewById(resId);
+        return result;
+    }
 
     // ---------------------------------------------------
     @Override

@@ -1,6 +1,7 @@
 package com.lak.core.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -18,9 +19,11 @@ import com.lak.tools.keyboard.KeyboardUtils;
 public abstract class BaseActivity extends AppCompatActivity {
     // ---------------------------------------------------
     protected abstract @LayoutRes int getLayoutId();
+    protected abstract void initialDatas(@Nullable Intent intent); // 接收数据
+    protected abstract void initialViews(); // 初始化View
+    protected abstract void initialListeners(); // 设置监听事件
 
     // ---------------------------------------------------
-    protected final String sClassName = this.getClass().getSimpleName();
     protected Context mCtx;     // 上下文  文法
 
     // ---------------------------------------------------
@@ -29,6 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.mCtx = this;
         setContentView(getLayoutId());
+
+        initialDatas(getIntent()); // 接收数据
+        initialViews(); // 初始化View
+        initialListeners(); // 设置监听事件
         ActivitiesManager.instance().addActivity(this);
     }
 
