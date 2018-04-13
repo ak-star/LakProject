@@ -82,6 +82,23 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<
     protected void onDestroy() {
         super.onDestroy();
         mvpDelegate().onDestroy();
+        mMvpDelegate = null;
+        mPresenter = null;
     }
 
+//    /**
+//     * 保存一个对象的实例
+//     *      当Activity意外关闭，意外销毁，横竖屏切换导致onDestory方法没有回调，
+//     *      或者我们需要使用的数据被意外释放掉时，自动调用
+//     * @return
+//     */
+//    @Override
+//    public Object onRetainCustomNonConfigurationInstance() {
+//        return super.onRetainCustomNonConfigurationInstance();
+//    }
+//
+//    @Override
+//    public Object getLastCustomNonConfigurationInstance() {
+//        return super.getLastCustomNonConfigurationInstance();
+//    }
 }

@@ -11,4 +11,12 @@ import com.lak.core.mvp.impl.MvpPresenterImpl;
 
 public interface ActivityMvpDelegateCallback<V extends MvpView, P extends MvpPresenterImpl<V>>
         extends MvpDelegateCallback<V, P> {
+
+//    /**
+//     * 获取实例
+//     *
+//     * @return
+//     */
+//    public Object getLastCustomNonConfigurationInstance();
+
 }

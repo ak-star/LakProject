@@ -105,6 +105,8 @@ public abstract class MvpFragment<V extends MvpView, P extends MvpPresenterImpl<
     public void onDestroy() {
         super.onDestroy();
         mvpDelegate().onDestroy();
+        mMvpDelegate = null;
+        mPresenter = null;
     }
 
 }

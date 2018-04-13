@@ -31,12 +31,20 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mCtx = this;
-        setContentView(getLayoutId());
-
         initialDatas(getIntent()); // 接收数据
+        setContentView(getLayoutId());
+        ActivitiesManager.instance().addActivity(this);
+    }
+
+    /**
+     * 在setContentView()
+     * 或者addContentView()方法执行完毕时会调用该方法，
+     */
+    @Override
+    public void onContentChanged() {
+        super.onContentChanged();
         initialViews(); // 初始化View
         initialListeners(); // 设置监听事件
-        ActivitiesManager.instance().addActivity(this);
     }
 
     @Override
