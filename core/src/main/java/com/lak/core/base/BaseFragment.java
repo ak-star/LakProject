@@ -23,6 +23,7 @@ import com.lak.core.tools.ToastUtils;
 public abstract class BaseFragment extends Fragment {
     // ---------------------------------------------------
     protected abstract @LayoutRes int getLayoutId();
+    protected abstract View getRootView();
 
     // ---------------------------------------------------
     protected Context mCtx;     // 上下文  文法
@@ -52,7 +53,10 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(getLayoutId(), container, false);
+        mRootView = getRootView();
+        if (mRootView == null) {
+            mRootView = inflater.inflate(getLayoutId(), container, false);
+        }
         return mRootView;
     }
 

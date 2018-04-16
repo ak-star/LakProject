@@ -34,7 +34,9 @@ public class ToastUtils {
      * @param toastStr 提示内容
      */
     public void show(CharSequence toastStr) {
-        Toast.makeText(mCtx, toastStr, Toast.LENGTH_SHORT).show();
+        if (!nullOrEmpty(toastStr)) {
+            Toast.makeText(mCtx, toastStr, Toast.LENGTH_SHORT).show();
+        }
     }
 
     /**
@@ -52,7 +54,9 @@ public class ToastUtils {
      * @param toastStr 提示内容
      */
     public void showLong(CharSequence toastStr) {
-        Toast.makeText(mCtx, toastStr, Toast.LENGTH_LONG).show();
+        if (!nullOrEmpty(toastStr)) {
+            Toast.makeText(mCtx, toastStr, Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
@@ -62,6 +66,16 @@ public class ToastUtils {
      */
     public void showLong(@StringRes int resId) {
         Toast.makeText(mCtx, resId, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * 是否为空or空串
+     *
+     * @param sequence
+     * @return
+     */
+    private boolean nullOrEmpty(CharSequence sequence) {
+        return sequence == null || "".equals(sequence.toString());
     }
 
 }

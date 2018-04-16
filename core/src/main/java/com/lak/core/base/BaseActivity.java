@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.lak.core.manager.ActivitiesManager;
 import com.lak.tools.keyboard.KeyboardUtils;
@@ -19,6 +20,7 @@ import com.lak.tools.keyboard.KeyboardUtils;
 public abstract class BaseActivity extends AppCompatActivity {
     // ---------------------------------------------------
     protected abstract @LayoutRes int getLayoutId();
+    protected abstract View getRootView();
     protected abstract void initialDatas(@Nullable Intent intent); // 接收数据
     protected abstract void initialViews(); // 初始化View
     protected abstract void initialListeners(); // 设置监听事件
@@ -32,7 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.mCtx = this;
         initialDatas(getIntent()); // 接收数据
-        setContentView(getLayoutId());
+        View rootView = getRootView();
+        if (rootView != null)
+            setContentView(rootView);
+        else
+            setContentView(getLayoutId());
         ActivitiesManager.instance().addActivity(this);
     }
 

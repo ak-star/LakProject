@@ -21,6 +21,11 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter>
     }
 
     @Override
+    protected View getRootView() {
+        return null;
+    }
+
+    @Override
     protected MainPresenter bindPresenter() {
         return new MainPresenter(this);
     }
