@@ -2,6 +2,7 @@ package com.lak.core.mvp.support.lifecycle.impl;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 
 import com.lak.core.mvp.base.MvpView;
 import com.lak.core.mvp.impl.MvpPresenterImpl;
@@ -9,6 +10,7 @@ import com.lak.core.mvp.support.contract.callback.ActivityMvpDelegateCallback;
 import com.lak.core.mvp.support.contract.proxy.MvpDelegateCallbackProxy;
 import com.lak.core.mvp.support.lifecycle.delegate.ActivityMvpDelegate;
 import com.lak.core.tools.Preconditions;
+import com.lak.core.tools.ToastUtils;
 
 /**
  * Created by lawrence on 2018/4/9.
@@ -33,12 +35,16 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
      */
     private MvpDelegateCallbackProxy<V, P> mProxy = null;
 
+
+    // --------------------------------------------------------------------------------------
     public ActivityMvpDelegateImpl(
             @NonNull ActivityMvpDelegateCallback<V, P> delegateCallback) {
         Preconditions.checkNotNull(delegateCallback);
         this.mDelegateCallback = delegateCallback;
     }
 
+
+    // --------------------------------------------------------------------------------------
     /**
      * 得到MvpDelegateCallback的代理对象
      *
@@ -46,10 +52,31 @@ public class ActivityMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
      */
     private MvpDelegateCallbackProxy<V, P> delegateProxy() {
         if (this.mProxy == null)
-            this.mProxy = new MvpDelegateCallbackProxy<V, P>(mDelegateCallback);
+            this.mProxy = new MvpDelegateCallbackProxy<>(mDelegateCallback);
         return this.mProxy;
     }
 
+
+    // --------------------------------------------------------------------------------------
+    @Override
+    public void toast(CharSequence toastStr) {
+        ToastUtils.instance().show(toastStr);
+    }
+    @Override
+    public void toast(@StringRes int resId) {
+        ToastUtils.instance().show(resId);
+    }
+    @Override
+    public void toastLong(CharSequence toastStr) {
+        ToastUtils.instance().showLong(toastStr);
+    }
+    @Override
+    public void toastLong(@StringRes int resId) {
+        ToastUtils.instance().showLong(resId);
+    }
+
+
+    // --------------------------------------------------------------------------------------
     @Override
     public void onCreate(Bundle savedInstanceState) {
         delegateProxy().newPresenter();

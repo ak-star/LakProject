@@ -3,6 +3,7 @@ package com.lak.core.mvp;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,20 @@ public abstract class MvpFragment<V extends MvpView, P extends MvpPresenterImpl<
         if (this.mMvpDelegate == null)
             this.mMvpDelegate = new FragmentMvpDelegateImpl<V, P>(this);
         return this.mMvpDelegate;
+    }
+
+    // ---------------------------------------------------
+    protected void toast(CharSequence toastStr) {
+        mvpDelegate().toast(toastStr);
+    }
+    protected void toast(@StringRes int resId) {
+        mvpDelegate().toast(resId);
+    }
+    protected void toastLong(CharSequence toastStr) {
+        mvpDelegate().toastLong(toastStr);
+    }
+    protected void toastLong(@StringRes int resId) {
+        mvpDelegate().toastLong(resId);
     }
 
     // ---------------------------------------------------

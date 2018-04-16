@@ -6,13 +6,18 @@ import android.os.Bundle;
 import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.lak.core.tools.ToastUtils;
+
 /**
  * Created by lawrence on 2018/4/9.
+ * <p>
+ * BaseFragment
  */
 
 public abstract class BaseFragment extends Fragment {
@@ -60,6 +65,20 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    // ---------------------------------------------------
+    protected void toast(CharSequence toastStr) {
+        ToastUtils.instance().show(toastStr);
+    }
+    protected void toast(@StringRes int resId) {
+        ToastUtils.instance().show(resId);
+    }
+    protected void toastLong(CharSequence toastStr) {
+        ToastUtils.instance().showLong(toastStr);
+    }
+    protected void toastLong(@StringRes int resId) {
+        ToastUtils.instance().showLong(resId);
     }
 
 }

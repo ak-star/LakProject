@@ -2,6 +2,7 @@ package com.lak.core.mvp;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 
 import com.lak.core.base.BaseActivity;
 import com.lak.core.mvp.base.MvpView;
@@ -42,8 +43,22 @@ public abstract class MvpActivity<V extends MvpView, P extends MvpPresenterImpl<
 
     protected ActivityMvpDelegate<V, P> mvpDelegate() {
         if (this.mMvpDelegate == null)
-            this.mMvpDelegate = new ActivityMvpDelegateImpl<V, P>(this);
+            this.mMvpDelegate = new ActivityMvpDelegateImpl<>(this);
         return this.mMvpDelegate;
+    }
+
+    // ---------------------------------------------------
+    protected void toast(CharSequence toastStr) {
+        mvpDelegate().toast(toastStr);
+    }
+    protected void toast(@StringRes int resId) {
+        mvpDelegate().toast(resId);
+    }
+    protected void toastLong(CharSequence toastStr) {
+        mvpDelegate().toastLong(toastStr);
+    }
+    protected void toastLong(@StringRes int resId) {
+        mvpDelegate().toastLong(resId);
     }
 
     // ---------------------------------------------------

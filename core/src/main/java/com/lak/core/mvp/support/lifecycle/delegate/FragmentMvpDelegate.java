@@ -3,6 +3,7 @@ package com.lak.core.mvp.support.lifecycle.delegate;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -16,7 +17,17 @@ import com.lak.core.mvp.impl.MvpPresenterImpl;
  */
 
 public interface FragmentMvpDelegate<V extends MvpView, P extends MvpPresenterImpl<V>> {
+    // --------------------------------------------------------------------------------------
+    public void toast(CharSequence toastStr);
 
+    public void toast(@StringRes int resId);
+
+    public void toastLong(CharSequence toastStr);
+
+    public void toastLong(@StringRes int resId);
+
+
+    // --------------------------------------------------------------------------------------
     public void onAttach(Context context);
 
     public void onAttach(Activity activity);

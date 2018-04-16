@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -13,6 +14,7 @@ import com.lak.core.mvp.support.contract.callback.FragmentMvpDelegateCallback;
 import com.lak.core.mvp.support.contract.proxy.MvpDelegateCallbackProxy;
 import com.lak.core.mvp.support.lifecycle.delegate.FragmentMvpDelegate;
 import com.lak.core.tools.Preconditions;
+import com.lak.core.tools.ToastUtils;
 
 /**
  * Created by lawrence on 2018/4/9.
@@ -31,18 +33,43 @@ public class FragmentMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
      */
     private MvpDelegateCallbackProxy<V, P> mProxy = null;
 
+
+    // --------------------------------------------------------------------------------------
     public FragmentMvpDelegateImpl(
             @NonNull FragmentMvpDelegateCallback<V, P> delegateCallback) {
         Preconditions.checkNotNull(delegateCallback);
         this.mDelegateCallback = delegateCallback;
     }
 
+
+    // --------------------------------------------------------------------------------------
     private MvpDelegateCallbackProxy<V, P> delegateProxy() {
         if (this.mProxy == null)
-            this.mProxy = new MvpDelegateCallbackProxy<V, P>(mDelegateCallback);
+            this.mProxy = new MvpDelegateCallbackProxy<>(mDelegateCallback);
         return this.mProxy;
     }
 
+
+    // --------------------------------------------------------------------------------------
+    @Override
+    public void toast(CharSequence toastStr) {
+        ToastUtils.instance().show(toastStr);
+    }
+    @Override
+    public void toast(@StringRes int resId) {
+        ToastUtils.instance().show(resId);
+    }
+    @Override
+    public void toastLong(CharSequence toastStr) {
+        ToastUtils.instance().showLong(toastStr);
+    }
+    @Override
+    public void toastLong(@StringRes int resId) {
+        ToastUtils.instance().showLong(resId);
+    }
+
+
+    // --------------------------------------------------------------------------------------
     @Override
     public void onAttach(Context context) { }
 
@@ -51,8 +78,7 @@ public class FragmentMvpDelegateImpl<V extends MvpView, P extends MvpPresenterIm
 
     @Override
     public void onCreateView(LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-    }
+                             ViewGroup container, Bundle savedInstanceState) { }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {

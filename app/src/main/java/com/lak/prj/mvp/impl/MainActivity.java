@@ -41,6 +41,7 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter>
     @Override
     public void add(MainModel data) {
         mTextView.setText(Integer.toString(data.test));
+        toast("toast do add " + data.test);
     }
 
     @Override

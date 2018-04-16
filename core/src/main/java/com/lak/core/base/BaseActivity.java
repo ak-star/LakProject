@@ -13,7 +13,7 @@ import com.lak.tools.keyboard.KeyboardUtils;
 /**
  * Created by lawrence on 2018/4/3.
  * <p>
- * 基础Activity，基础Mvp
+ * 基础Activity
  */
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -65,5 +65,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ActivitiesManager.instance().removeActivity(this);
     }
+
 
 }
