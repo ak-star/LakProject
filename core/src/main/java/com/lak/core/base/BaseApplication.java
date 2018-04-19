@@ -3,6 +3,9 @@ package com.lak.core.base;
 import android.app.Application;
 import android.content.Context;
 
+import com.lak.core.dagger2.components.AppComponent;
+import com.lak.core.dagger2.components.DaggerAppComponent;
+import com.lak.core.dagger2.modules.AppModule;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -19,6 +22,18 @@ public class BaseApplication extends Application {
         super.onCreate();
         mCtx = getApplicationContext();
         setupLeakCanary(mCtx, this);
+    }
+
+    // ------------------- dagger2 ----------------------------------------------------------
+    private static AppComponent mAppComponent = null;
+
+    public static synchronized AppComponent getAppComponent() {
+        if (mAppComponent == null) {
+            mAppComponent = DaggerAppComponent.builder()
+                    .appModule(new AppModule(appContext()))
+                    .build();
+        }
+        return mAppComponent;
     }
 
 
