@@ -16,7 +16,7 @@ public class DisplayUtils {
     private static Context mCtx = null;
     private static volatile DisplayUtils INSTANCE = null;
 
-    public static void init(Context ctx) {
+    private static void init(Context ctx) {
         if (INSTANCE == null) {
             synchronized (DisplayUtils.class) {
                 if (INSTANCE == null)
@@ -25,7 +25,8 @@ public class DisplayUtils {
         }
     }
 
-    public DisplayUtils instance() {
+    public static DisplayUtils instance(Context ctx) {
+        init(ctx);
         return INSTANCE;
     }
 

@@ -16,7 +16,7 @@ public class ToastUtils {
     private final Context mCtx;
 
     private ToastUtils() {
-        mCtx = BaseApplication.appContext();
+        mCtx = BaseApplication.appCtx();
         Preconditions.checkNotNull(mCtx, "请先设置app的application！");
     }
 
