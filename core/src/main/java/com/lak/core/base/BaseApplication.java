@@ -30,7 +30,7 @@ public class BaseApplication extends Application {
     public static synchronized AppComponent getAppComponent() {
         if (mAppComponent == null) {
             mAppComponent = DaggerAppComponent.builder()
-                    .appModule(new AppModule(appContext()))
+                    .appModule(new AppModule(appCtx()))
                     .build();
         }
         return mAppComponent;
@@ -44,7 +44,7 @@ public class BaseApplication extends Application {
      *
      * @return
      */
-    public static Context appContext() {
+    public static Context appCtx() {
         return mCtx;
     }
 
