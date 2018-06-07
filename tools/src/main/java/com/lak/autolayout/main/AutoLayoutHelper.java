@@ -7,8 +7,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lak.autolayout.AutoLayoutConfig;
+import com.lak.autolayout.attrs.CAttrHeight;
+import com.lak.autolayout.attrs.CAttrMargin;
+import com.lak.autolayout.attrs.CAttrMarginBottom;
+import com.lak.autolayout.attrs.CAttrMarginLeft;
+import com.lak.autolayout.attrs.CAttrMarginRight;
+import com.lak.autolayout.attrs.CAttrMarginTop;
+import com.lak.autolayout.attrs.CAttrMaxHeight;
+import com.lak.autolayout.attrs.CAttrMaxWidth;
+import com.lak.autolayout.attrs.CAttrMinHeight;
+import com.lak.autolayout.attrs.CAttrMinWidth;
+import com.lak.autolayout.attrs.CAttrPadding;
+import com.lak.autolayout.attrs.CAttrPaddingBottom;
+import com.lak.autolayout.attrs.CAttrPaddingLeft;
+import com.lak.autolayout.attrs.CAttrPaddingRight;
+import com.lak.autolayout.attrs.CAttrPaddingTop;
+import com.lak.autolayout.attrs.CAttrTextSize;
+import com.lak.autolayout.attrs.CAttrWidth;
 import com.lak.autolayout.attrs.SupportAttrs;
-import com.lak.tools.R;
 
 /**
  * Created by lawrence on 2018/5/23.
@@ -28,14 +44,23 @@ public class AutoLayoutHelper {
         }
     }
 
+    public void adjustChildren() {
+        mAutoLayoutConfig.checkParams();  // 确保已经得到设计宽
+
+        for (int i = 0, n = mHost.getChildCount(); i < n; i++) {
+            View view = mHost.getChildAt(i);
+            ViewGroup.LayoutParams params = view.getLayoutParams();
+            if (params instanceof AutoLayoutParams) {
+                AutoLayoutInfo info = ((AutoLayoutParams) params).getAutoLayoutInfo();
+                if (info != null) {
+                    info.fillAttrs(view);
+                }
+            }
+        }
+    }
+
     public static AutoLayoutInfo getAutoLayoutInfo(Context ctx, AttributeSet attrs) {
         AutoLayoutInfo info = new AutoLayoutInfo();
-
-        // 自定义的属性
-        TypedArray a = ctx.obtainStyledAttributes(attrs, R.styleable.AutoLayout_Layout);
-        int baseWidth = a.getInt(R.styleable.AutoLayout_Layout_layout_auto_basewidth, 0);
-        int baseHeight = a.getInt(R.styleable.AutoLayout_Layout_layout_auto_baseheight, 0);
-        a.recycle();
 
         // 系统的属性
         TypedArray array = ctx.obtainStyledAttributes(attrs, SupportAttrs.ATTRS);
@@ -55,78 +80,64 @@ public class AutoLayoutHelper {
 
             switch (index) {
                 case SupportAttrs.INDEX_WIDTH:
-                    info.addAttr(new WidthAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrWidth(pxVal));
                     break;
                 case SupportAttrs.INDEX_HEIGHT:
-                    info.addAttr(new HeightAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrHeight(pxVal));
                     break;
 
                 case SupportAttrs.INDEX_MAX_WIDTH:
-                    info.addAttr(new MaxWidthAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMaxWidth(pxVal));
                     break;
                 case SupportAttrs.INDEX_MAX_HEIGHT:
-                    info.addAttr(new MaxHeightAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMaxHeight(pxVal));
                     break;
                 case SupportAttrs.INDEX_MIN_WIDTH:
-                    info.addAttr(new MinWidthAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMinWidth(pxVal));
                     break;
                 case SupportAttrs.INDEX_MIN_HEIGHT:
-                    info.addAttr(new MinHeightAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMinHeight(pxVal));
                     break;
 
                 case SupportAttrs.INDEX_MARGIN:
-                    info.addAttr(new MarginAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMargin(pxVal));
                     break;
                 case SupportAttrs.INDEX_MARGIN_LEFT:
-                    info.addAttr(new MarginLeftAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMarginLeft(pxVal));
                     break;
                 case SupportAttrs.INDEX_MARGIN_TOP:
-                    info.addAttr(new MarginTopAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMarginTop(pxVal));
                     break;
                 case SupportAttrs.INDEX_MARGIN_RIGHT:
-                    info.addAttr(new MarginRightAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMarginRight(pxVal));
                     break;
                 case SupportAttrs.INDEX_MARGIN_BOTTOM:
-                    info.addAttr(new MarginBottomAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrMarginBottom(pxVal));
                     break;
 
                 case SupportAttrs.INDEX_PADDING:
-                    info.addAttr(new PaddingAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrPadding(pxVal));
                     break;
                 case SupportAttrs.INDEX_PADDING_LEFT:
-                    info.addAttr(new PaddingLeftAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrPaddingLeft(pxVal));
                     break;
                 case SupportAttrs.INDEX_PADDING_TOP:
-                    info.addAttr(new PaddingTopAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrPaddingTop(pxVal));
                     break;
                 case SupportAttrs.INDEX_PADDING_RIGHT:
-                    info.addAttr(new PaddingRightAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrPaddingRight(pxVal));
                     break;
                 case SupportAttrs.INDEX_PADDING_BOTTOM:
-                    info.addAttr(new PaddingBottomAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrPaddingBottom(pxVal));
                     break;
 
                 case SupportAttrs.INDEX_TEXT_SIZE:
-                    info.addAttr(new TextSizeAttr(pxVal, baseWidth, baseHeight));
+                    info.addAttr(new CAttrTextSize(pxVal));
                     break;
             }
         }
         array.recycle(); // 释放资源
-        AutoLayoutConfig.d("getAutoLayoutInfo " + info.toString());
         return info;
-    }
-
-    public void adjustChildren() {
-        for (int i = 0, n = mHost.getChildCount(); i < n; i++) {
-            View view = mHost.getChildAt(i);
-            ViewGroup.LayoutParams params = view.getLayoutParams();
-            if (params instanceof AutoLayoutParams) {
-                AutoLayoutInfo info = ((AutoLayoutParams) params).getAutoLayoutInfo();
-                if (info != null) {
-                    info.fillAttrs(view);
-                }
-            }
-        }
     }
 
 

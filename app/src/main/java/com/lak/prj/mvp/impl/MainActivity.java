@@ -16,6 +16,11 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter>
     private TextView mTextView;
 
     @Override
+    protected MainPresenter bindPresenter() {
+        return new MainPresenter(this);
+    }
+
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
     }
@@ -23,11 +28,6 @@ public class MainActivity extends MvpActivity<MainView, MainPresenter>
     @Override
     protected View getRootView() {
         return null;
-    }
-
-    @Override
-    protected MainPresenter bindPresenter() {
-        return new MainPresenter(this);
     }
 
     @Override

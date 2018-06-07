@@ -35,7 +35,7 @@ dependencies {
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
     //
-    implementation project(':tools')
+    api project(':tools')
     implementation files('libs/nineoldandroids-2.4.0.jar')
     api project(':logger')
 }
