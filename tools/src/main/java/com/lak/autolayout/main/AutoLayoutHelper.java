@@ -62,7 +62,8 @@ public class AutoLayoutHelper {
     public static AutoLayoutInfo getAutoLayoutInfo(Context ctx, AttributeSet attrs) {
         AutoLayoutInfo info = new AutoLayoutInfo();
 
-        // 系统的属性
+        // int[] systemAttrs = R.styleable.AutoLayoutSystemAttrs; // 通过xml定义的是自动排序
+        // 系统的属性，注意SupportAttrs.ATTRS：顺序！顺序！顺序！
         TypedArray array = ctx.obtainStyledAttributes(attrs, SupportAttrs.ATTRS);
         int n = array.getIndexCount();
         for (int i = 0; i < n; i++) {

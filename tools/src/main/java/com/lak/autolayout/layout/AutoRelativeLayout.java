@@ -2,6 +2,7 @@ package com.lak.autolayout.layout;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
@@ -76,6 +77,11 @@ public class AutoRelativeLayout extends RelativeLayout {
         @Override
         public AutoLayoutInfo getAutoLayoutInfo() {
             return mAutoLayoutInfo;
+        }
+
+        @Override
+        protected void setBaseAttributes(TypedArray a, int widthAttr, int heightAttr) {
+            super.setBaseAttributes(a, widthAttr, heightAttr);
         }
     }
 }
