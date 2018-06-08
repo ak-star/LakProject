@@ -13,6 +13,7 @@ import android.view.View;
 
 public class AutoLayoutActivity extends AppCompatActivity {
     private static final String LAYOUT_LINEAR_LAYOUT = "LinearLayout";
+    private static final String LAYOUT_LINEAR_LAYOUT_COMPAT = "LinearLayoutCompat";
     private static final String LAYOUT_FRAME_LAYOUT = "FrameLayout";
     private static final String LAYOUT_RELATIVE_LAYOUT = "RelativeLayout";
 
@@ -21,15 +22,14 @@ public class AutoLayoutActivity extends AppCompatActivity {
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View view = null;
-        if (name.equals(LAYOUT_FRAME_LAYOUT)) {
-            view = new AutoFrameLayout(context, attrs);
-        }
 
         if (name.equals(LAYOUT_LINEAR_LAYOUT)) {
             view = new AutoLinearLayout(context, attrs);
-        }
-
-        if (name.equals(LAYOUT_RELATIVE_LAYOUT)) {
+        } else if (name.equals(LAYOUT_LINEAR_LAYOUT_COMPAT)) {
+            view = new AutoLinearLayoutCompat(context, attrs);
+        } else if (name.equals(LAYOUT_FRAME_LAYOUT)) {
+            view = new AutoFrameLayout(context, attrs);
+        } else if (name.equals(LAYOUT_RELATIVE_LAYOUT)) {
             view = new AutoRelativeLayout(context, attrs);
         }
 
