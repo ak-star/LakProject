@@ -14,7 +14,6 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/ef_total"
             android:gravity="center"
             android:text="收入报表"
             android:textColor="@color/c_2d2d2d"

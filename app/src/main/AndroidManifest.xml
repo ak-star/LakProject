@@ -26,6 +26,10 @@
             android:name=".mvp.impl.EarningFormsActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".TestScanActivity"
+            android:screenOrientation="portrait" />
+
         <meta-data
             android:name="design_width"
             android:value="750" />

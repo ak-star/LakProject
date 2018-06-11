@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import com.lak.prj.mvp.impl.EarningFormsActivity;
-
 /**
  * Created by lawrence on 2018/4/10.
  */
@@ -20,7 +18,8 @@ public class SplashActivity extends AppCompatActivity {
         findViewById(R.id.click).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(SplashActivity.this, EarningFormsActivity.class));
+//                startActivity(new Intent(SplashActivity.this, EarningFormsActivity.class));
+                startActivity(new Intent(SplashActivity.this, TestScanActivity.class));
             }
         });
     }

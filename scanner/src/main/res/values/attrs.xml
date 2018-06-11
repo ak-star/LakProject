@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="scanBorderColor" format="color|reference" />
+    <attr name="scanLaserColor" format="color|reference" />
+
+    <declare-styleable name="ScanView">
+        <attr name="scanBorderColor" />
+        <attr name="scanLaserColor" />
+    </declare-styleable>
+
+</resources>
