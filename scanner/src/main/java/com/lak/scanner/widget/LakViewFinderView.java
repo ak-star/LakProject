@@ -40,6 +40,7 @@ public class LakViewFinderView extends ViewFinderView {
     private final float mDensityDpi;
     private int mLaserStrokeWidth = 2;
     private final int mLaserStartLocation;
+    private boolean isStop = false;     // 是否停止扫描
 
     private RectF rect_lt, rect_rt, rect_lb, rect_rb;
 
@@ -238,6 +239,7 @@ public class LakViewFinderView extends ViewFinderView {
 
     @Override
     public void drawLaser(Canvas canvas) {
+        if (isStop) { return; }
         Rect framingRect = getFramingRect();
 
         if (mLaserLocation == 0 || mLaserLocation >= framingRect.bottom - mLaserStartLocation) {
@@ -348,6 +350,11 @@ public class LakViewFinderView extends ViewFinderView {
     // 图片按钮点击事件
     public void setOnBitmapButtonClickListener(OnClickListener listener) {
         mButtonClickListener = listener;
+    }
+
+    // 是否停止扫描线绘制
+    public void stopLaser(boolean isStop) {
+        this.isStop = isStop;
     }
 
     private float downX = -1, downY = -1;

@@ -24,6 +24,8 @@ public class ScanView extends ZBarScannerView {
     private int mBorderColor = Color.GREEN;     // 扫描框颜色
     private int mLaserColor = Color.GREEN;      // 扫描线颜色
 
+    private IViewFinder mFinderView = null;
+
     public ScanView(Context context) {
         this(context, null);
     }
@@ -44,7 +46,7 @@ public class ScanView extends ZBarScannerView {
     // 扫描框
     @Override
     protected IViewFinder createViewFinderView(Context context) {
-        return newViewFinder(context);
+        return mFinderView = newViewFinder(context);
     }
 
     @Override
@@ -62,6 +64,46 @@ public class ScanView extends ZBarScannerView {
         viewFinder.setBorderColor(mBorderColor);    // 扫描框边框颜色
         viewFinder.setLaserColor(mLaserColor);      // 扫描框内，扫描线颜色
         return viewFinder;
+    }
+
+    @Override
+    public void startCamera() {
+        startLaser();
+        super.startCamera();
+    }
+
+    @Override
+    public void startCamera(int cameraId) {
+        startLaser();
+        super.startCamera(cameraId);
+    }
+
+    @Override
+    public void stopCameraPreview() {
+        stopLaser();
+        super.stopCameraPreview();
+    }
+
+    @Override
+    public void stopCamera() {
+        stopLaser();
+        super.stopCamera();
+    }
+
+    // 停止扫描线移动
+    private void stopLaser() {
+        if (mFinderView != null
+                && mFinderView instanceof LakViewFinderView) {
+            ((LakViewFinderView) mFinderView).stopLaser(true);
+        }
+    }
+
+    // 开始扫描线移动
+    private void startLaser() {
+        if (mFinderView != null
+                && mFinderView instanceof LakViewFinderView) {
+            ((LakViewFinderView) mFinderView).stopLaser(false);
+        }
     }
 
 }
