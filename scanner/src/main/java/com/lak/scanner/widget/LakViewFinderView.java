@@ -47,6 +47,7 @@ public class LakViewFinderView extends ViewFinderView {
     private String sMsg = "";   // 显示文本
     private int mMessageColor = Color.WHITE;  // 文字颜色
     private float mMessageFontSize = 14f;   // 文字大小 单位sp
+    private int mTextMarginBottom = 20;     // 文字距离扫描框的间距
 
     private Paint mBitmapPaint;
     private @DrawableRes int mBitmapButton = -1;        // 显示在下面区域的按钮
@@ -80,6 +81,7 @@ public class LakViewFinderView extends ViewFinderView {
         sMsg = context.getString(R.string.scanner_warning);
 
         initialTextPaint();     // 设置文本画笔
+        mTextMarginBottom = dp2px(20); // 文字距离扫描框的间距
         initialBitmapPaint();   // 设置图片画笔
     }
 
@@ -143,7 +145,7 @@ public class LakViewFinderView extends ViewFinderView {
             int txt_l = rect.left; //起始位置
             if (width > txtLength)
                 txt_l += (int) ((width - txtLength) / 2);
-            canvas.drawText(sMsg, txt_l, rect.bottom - 40, mTextPaint);
+            canvas.drawText(sMsg, txt_l, rect.bottom - mTextMarginBottom, mTextPaint);
         }
     }
 
@@ -313,6 +315,22 @@ public class LakViewFinderView extends ViewFinderView {
         mMessageFontSize = spVal;
         if (mTextPaint != null)
             mTextPaint.setTextSize(sp2px(mMessageFontSize));
+    }
+
+    /**
+     * 文字距离扫描框的间距
+     * @param dpVal
+     */
+    public void setMessageMarginDp(int dpVal) {
+        mTextMarginBottom = dp2px(dpVal);
+    }
+
+    /**
+     * 文字距离扫描框的间距
+     * @param pxVal
+     */
+    public void setMessageMarginPx(int pxVal) {
+        mTextMarginBottom = pxVal;
     }
 
     /**

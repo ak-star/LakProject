@@ -43,6 +43,7 @@ public class TestScanActivity extends ScanActivity {
                 new Point(instance.dp2px(30), instance.dp2px(30)));
         finderView.setMessageText("将要扫的二维码放入取景框中，自动识别");
         finderView.setMessageFontSize(14);
+        finderView.setMessageMarginDp(30);
         finderView.setOnBitmapButtonClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
