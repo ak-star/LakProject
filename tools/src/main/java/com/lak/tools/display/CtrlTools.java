@@ -2,6 +2,7 @@ package com.lak.tools.display;
 
 import android.content.Context;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 
 /**
@@ -42,12 +43,14 @@ public final class CtrlTools {
     private int DISPLAY_H = 0;                  // 屏幕高度
     private int DESIGN_W = DEFAULT_DESIGN_W;    // 设计比例
     private float RATIO = 0;                    // 比例， 屏幕宽度/设计宽度
+    private final int TOUCH_SLOP;               // 最小移动单位
 
     private CtrlTools(Context appCtx) {
         mAppCtx = appCtx.getApplicationContext();
         DISPLAY_W = mAppCtx.getResources().getDisplayMetrics().widthPixels;
         DISPLAY_H = mAppCtx.getResources().getDisplayMetrics().heightPixels;
         setDesign(DEFAULT_DESIGN_W); // 设置默认设计宽度
+        TOUCH_SLOP = ViewConfiguration.get(appCtx).getScaledTouchSlop();
     }
 
     /**
@@ -279,6 +282,13 @@ public final class CtrlTools {
     public int ratioSp(float fontPx) {
         float px = fontPx * RATIO; // 对应设计的 字体px
         return px2sp(px);
+    }
+
+    /**
+     * 系统移动距离最小单位
+     */
+    public int touchSlop() {
+        return TOUCH_SLOP;
     }
 
 }

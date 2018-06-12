@@ -23,4 +23,5 @@ public interface ScanDelegate extends ZBarScannerView.ResultHandler {
 
     // 存储相机相关设置
     void onSaveInstanceState(Bundle outState);
+
 }

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lak.scanner.impl.ScanDelegateImpl;
+import com.lak.scanner.widget.LakViewFinderView;
 
 import me.dm7.barcodescanner.zbar.Result;
 
@@ -26,6 +27,7 @@ public abstract class ScanFragment extends Fragment {
     protected View mScanView = null; // 二维码扫描控件
 
     protected abstract void handleResult(Result result);
+    protected abstract void setViewFinderView(LakViewFinderView finderView);
 
     @Override
     public void onAttach(Context context) {
@@ -46,6 +48,10 @@ public abstract class ScanFragment extends Fragment {
             @Override
             public void handleResult(Result result) {
                 ScanFragment.this.handleResult(result);
+            }
+            @Override
+            protected void setViewFinderView(LakViewFinderView finderView) {
+                ScanFragment.this.setViewFinderView(finderView);
             }
         };
         mScanView = mProxy.onCreateView(savedInstanceState);

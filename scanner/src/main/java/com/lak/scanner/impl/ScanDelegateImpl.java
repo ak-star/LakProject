@@ -7,7 +7,10 @@ import android.support.annotation.ColorRes;
 import android.view.View;
 
 import com.lak.scanner.delegate.ScanDelegate;
+import com.lak.scanner.widget.LakViewFinderView;
 import com.lak.scanner.widget.ScanView;
+
+import me.dm7.barcodescanner.core.IViewFinder;
 
 /**
  * Created by lawrence on 2018/6/11.
@@ -37,9 +40,19 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
         mCtx = ctx;
     }
 
+    protected abstract void setViewFinderView(LakViewFinderView finderView);
+
     @Override
     public View onCreateView(Bundle state) {
-        mScannerView = new ScanView(mCtx);
+        mScannerView = new ScanView(mCtx) {
+            @Override
+            protected IViewFinder newViewFinder(Context ctx) {
+                IViewFinder viewFinder = super.newViewFinder(ctx);
+                if (viewFinder instanceof LakViewFinderView)
+                    setViewFinderView((LakViewFinderView) viewFinder);
+                return viewFinder;
+            }
+        };
         if (state != null) {
             mFlash = state.getBoolean(FLASH_STATE, false);
             mAutoFocus = state.getBoolean(AUTO_FOCUS_STATE, true);
