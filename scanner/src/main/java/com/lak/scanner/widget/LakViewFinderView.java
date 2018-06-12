@@ -172,10 +172,12 @@ public class LakViewFinderView extends ViewFinderView {
     private Bitmap getBitmap() {
         if (mBitmapButton == -1) {
             recycleBitmap();
-        } else if (mWrfBitmap == null) {
+        } else if (mWrfBitmap == null
+                || mWrfBitmap.get() == null) {
+            recycleBitmap();
             Bitmap bmp = BitmapFactory.decodeResource(getResources(), mBitmapButton);
             if (bmp != null)
-                mWrfBitmap = new WeakReference<Bitmap>(bmp);
+                mWrfBitmap = new WeakReference<>(bmp);
         }
         if (mWrfBitmap != null) {
             final Bitmap bitmap = mWrfBitmap.get();
