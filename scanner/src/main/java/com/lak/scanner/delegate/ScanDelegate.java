@@ -3,15 +3,13 @@ package com.lak.scanner.delegate;
 import android.os.Bundle;
 import android.view.View;
 
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
-
 /**
  * Created by lawrence on 2018/6/11.
  * <p>
  * 扫描代理
  */
 
-public interface ScanDelegate extends ZBarScannerView.ResultHandler {
+public interface ScanDelegate {
     // 初始化二维码扫描控件，并恢复相机相关设置
     View onCreateView(Bundle savedInstanceState);
 

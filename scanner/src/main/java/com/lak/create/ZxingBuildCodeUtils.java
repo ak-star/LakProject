@@ -17,9 +17,9 @@ import java.util.Hashtable;
  * zxing生成码图
  * @author lxh
  */
-public enum BuildCodeUtils {
+public enum ZxingBuildCodeUtils {
 	Instance;
-	
+
 	private static final int WHITE = 0xFFFFFFFF;
 	private static final int BLACK = 0xFF000000;
 
@@ -32,7 +32,7 @@ public enum BuildCodeUtils {
 	 */
 	public Bitmap buildQRCodeImage(String content, int width, int height) {
 		Bitmap bitmap = null;
-		if (!TextUtils.isEmpty(content)) { 
+		if (!TextUtils.isEmpty(content)) {
 			try {
 				Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
 				hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
@@ -61,7 +61,7 @@ public enum BuildCodeUtils {
 		}
 		return bitmap;
 	}
-	
+
 	/**
 	 * 制作CODE_128的条形码
 	 * @param content 条形码表达信息
@@ -72,7 +72,7 @@ public enum BuildCodeUtils {
 	public Bitmap buildCODE_128(String content, int width, int height) throws IllegalArgumentException, WriterException {
 		return buildBarcodeImage(content, BarcodeFormat.CODE_128, width, height);
 	}
-	
+
 	/**
 	 * 制作条形码
 	 * @param content 条形码表达信息
@@ -83,7 +83,7 @@ public enum BuildCodeUtils {
 	 */
 	public Bitmap buildBarcodeImage(String content, BarcodeFormat format, int desiredWidth, int desiredHeight) throws IllegalArgumentException, WriterException {
 		Bitmap bitmap = null;
-		if (!TextUtils.isEmpty(content)) { 
+		if (!TextUtils.isEmpty(content)) {
 			MultiFormatWriter writer = new MultiFormatWriter();
 			BitMatrix result = writer.encode(content, format, desiredWidth, desiredHeight, null);
 			int width = result.getWidth();
@@ -102,5 +102,5 @@ public enum BuildCodeUtils {
 		}
 		return bitmap;
 	}
-	
+
 }

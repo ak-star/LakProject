@@ -8,12 +8,12 @@ import android.view.View;
 
 import com.lak.scanner.delegate.ScanDelegate;
 import com.lak.scanner.widget.LakViewFinderView;
-import com.lak.scanner.widget.ScanView;
 
+import me.dm7.barcodescanner.core.BarcodeScannerView;
 import me.dm7.barcodescanner.core.IViewFinder;
 
 /**
- * Created by lawrence on 2018/6/11.
+ * Created by lawrence on 2018/6/14.
  * <p>
  * 二维码扫描代理实现
  */
@@ -26,33 +26,36 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
     private static final String LASER_ENABLED = "LASER_ENABLED";
     private static final String SQUARE_FINDER = "SQUARE_FINDER";
 
-    private Context mCtx = null;
-    private ScanView mScannerView;
+    protected Context mCtx = null;
+    protected BarcodeScannerView mScannerView;
 
-    private boolean mFlash;         // 闪光灯
-    private boolean mAutoFocus;     // 自动化对焦
-    private @ColorRes int mBorderColor;       // 扫描框颜色
-    private @ColorRes int mLaserColor;        // 扫描框中激光线颜色
-    private boolean mLaserEnabled = true;     // 扫描框中激光线是否显示
-    private boolean mSquareViewFinder = true;   // 扫描框是正方形
+    protected boolean mFlash;         // 闪光灯
+    protected boolean mAutoFocus;     // 自动化对焦
+    protected @ColorRes int mBorderColor;       // 扫描框颜色
+    protected @ColorRes int mLaserColor;        // 扫描框中激光线颜色
+    protected boolean mLaserEnabled = true;     // 扫描框中激光线是否显示
+    protected boolean mSquareViewFinder = true;   // 扫描框是正方形
+
+    protected abstract BarcodeScannerView setScannerCtrl(Context ctx);
+    // 此抽象接口与newViewFinder()关联使用
+    protected abstract void setViewFinderView(LakViewFinderView finderView);
 
     public ScanDelegateImpl(Context ctx) {
         mCtx = ctx;
     }
 
-    protected abstract void setViewFinderView(LakViewFinderView finderView);
+    // 构造一个默认实现 IViewFinder 接口的对象
+    protected IViewFinder newViewFinder(Context ctx) {
+        LakViewFinderView viewFinder = new LakViewFinderView(ctx);
+        viewFinder.setBorderColor(mBorderColor);    // 扫描框边框颜色
+        viewFinder.setLaserColor(mLaserColor);      // 扫描框内，扫描线颜色
+        setViewFinderView(viewFinder);
+        return viewFinder;
+    }
 
     @Override
     public View onCreateView(Bundle state) {
-        mScannerView = new ScanView(mCtx) {
-            @Override
-            protected IViewFinder newViewFinder(Context ctx) {
-                IViewFinder viewFinder = super.newViewFinder(ctx);
-                if (viewFinder instanceof LakViewFinderView)
-                    setViewFinderView((LakViewFinderView) viewFinder);
-                return viewFinder;
-            }
-        };
+        noNullScannerView(mScannerView = setScannerCtrl(mCtx));
         if (state != null) {
             mFlash = state.getBoolean(FLASH_STATE, false);
             mAutoFocus = state.getBoolean(AUTO_FOCUS_STATE, true);
@@ -71,10 +74,14 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
         return mScannerView;
     }
 
+    private void noNullScannerView(BarcodeScannerView scannerView) {
+        if (scannerView == null)
+            throw new NullPointerException("setScannerCtrl() can not return null.");
+    }
+
     @Override
     public void onResume() {
         if (mScannerView != null) {
-            mScannerView.setResultHandler(this);
             mScannerView.setSquareViewFinder(mSquareViewFinder);
             mScannerView.startCamera();
             mScannerView.setFlash(mFlash);
@@ -131,6 +138,10 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
     public ScanDelegateImpl setSquareViewFinder(boolean isSquareViewFinder) {
         mScannerView.setSquareViewFinder(mSquareViewFinder = isSquareViewFinder);
         return this;
+    }
+
+    public BarcodeScannerView getScannerView() {
+        return mScannerView;
     }
 
 }

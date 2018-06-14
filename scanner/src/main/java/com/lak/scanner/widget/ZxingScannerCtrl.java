@@ -8,17 +8,17 @@ import android.util.AttributeSet;
 import com.lak.scanner.R;
 
 import me.dm7.barcodescanner.core.IViewFinder;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
- * Created by lawrence on 2018/6/11.
+ * Created by lawrence on 2018/6/14.
  * <p>
  * 二维码扫描控件
  *
  * @link https://github.com/dm77/barcodescanner
  */
 
-public class ScanView extends ZBarScannerView {
+public class ZxingScannerCtrl extends ZXingScannerView {
     private Context mCtx = null;
 
     private int mBorderColor = Color.GREEN;     // 扫描框颜色
@@ -26,20 +26,21 @@ public class ScanView extends ZBarScannerView {
 
     private IViewFinder mFinderView = null;
 
-    public ScanView(Context context) {
+
+    public ZxingScannerCtrl(Context context) {
         this(context, null);
     }
 
-    public ScanView(Context context, AttributeSet attributeSet) {
+    public ZxingScannerCtrl(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
         mCtx = context;
         initialAttrs(attributeSet);
     }
 
     private void initialAttrs(AttributeSet attributeSet) {
-        TypedArray typedArray = mCtx.obtainStyledAttributes(attributeSet, R.styleable.ScanView);
-        mBorderColor = typedArray.getColor(R.styleable.ScanView_scanBorderColor, Color.GREEN);
-        mLaserColor = typedArray.getColor(R.styleable.ScanView_scanLaserColor, Color.GREEN);
+        TypedArray typedArray = mCtx.obtainStyledAttributes(attributeSet, R.styleable.ZbarScannerCtrl);
+        mBorderColor = typedArray.getColor(R.styleable.ZbarScannerCtrl_scanBorderColor, Color.GREEN);
+        mLaserColor = typedArray.getColor(R.styleable.ZbarScannerCtrl_scanLaserColor, Color.GREEN);
         typedArray.recycle();
     }
 
@@ -105,5 +106,4 @@ public class ScanView extends ZBarScannerView {
             ((LakViewFinderView) mFinderView).stopLaser(false);
         }
     }
-
 }

@@ -1,4 +1,4 @@
-package com.lak.scanner;
+package com.lak;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,9 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lak.scanner.impl.ScanDelegateImpl;
-import com.lak.scanner.widget.LakViewFinderView;
-
-import me.dm7.barcodescanner.zbar.Result;
 
 /**
  * Created by lawrence on 2018/6/11.
@@ -22,12 +19,10 @@ import me.dm7.barcodescanner.zbar.Result;
  */
 
 public abstract class ScanFragment extends Fragment {
-    private Context mCtx;
-    private ScanDelegateImpl mProxy = null;
-    protected View mScanView = null; // 二维码扫描控件
+    protected Context mCtx = null;
+    protected ScanDelegateImpl mProxy = null;
 
-    protected abstract void handleResult(Result result);
-    protected abstract void setViewFinderView(LakViewFinderView finderView);
+    protected abstract ScanDelegateImpl newInstanceScanDelegate(Context ctx);
 
     @Override
     public void onAttach(Context context) {
@@ -44,18 +39,13 @@ public abstract class ScanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mProxy = new ScanDelegateImpl(mCtx) {
-            @Override
-            public void handleResult(Result result) {
-                ScanFragment.this.handleResult(result);
-            }
-            @Override
-            protected void setViewFinderView(LakViewFinderView finderView) {
-                ScanFragment.this.setViewFinderView(finderView);
-            }
-        };
-        mScanView = mProxy.onCreateView(savedInstanceState);
-        return mScanView;
+        scanDelegateImpl(savedInstanceState);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+    protected void scanDelegateImpl(@Nullable Bundle savedInstanceState) {
+        mProxy = newInstanceScanDelegate(mCtx);
+        mProxy.onCreateView(savedInstanceState);
     }
 
     @Override

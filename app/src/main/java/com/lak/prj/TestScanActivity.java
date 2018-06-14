@@ -1,5 +1,6 @@
 package com.lak.prj;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -7,8 +8,10 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.lak.ScanActivity;
 import com.lak.core.tools.ToastUtils;
-import com.lak.scanner.ScanActivity;
+import com.lak.scanner.impl.ScanDelegateImpl;
+import com.lak.scanner.impl.ZbarScanDelegateImpl;
 import com.lak.scanner.widget.LakViewFinderView;
 import com.lak.tools.display.CtrlTools;
 
@@ -27,31 +30,33 @@ public class TestScanActivity extends ScanActivity {
         mProxy.setLaserColor(Color.parseColor("#CCFFFFFF"));
         mProxy.setBorderColor(Color.parseColor("#FFFFFF"));
         FrameLayout panel = findViewById(R.id.scan_panel);
-        panel.addView(mScanView);
+        panel.addView(mProxy.getScannerView());
     }
 
     @Override
-    protected void handleResult(Result result) {
-        finish();
-        ToastUtils.instance().show(result.getContents());
-    }
-
-    @Override
-    protected void setViewFinderView(LakViewFinderView finderView) {
-        CtrlTools instance = CtrlTools.instance(mCtx);
-        finderView.setBitmapButton(R.mipmap.i_scan_close,
-                new Point(instance.dp2px(30), instance.dp2px(30)));
-        finderView.setMessageText("将要扫的二维码放入取景框中，自动识别");
-        finderView.setMessageFontSize(14);
-        finderView.setMessageMarginDp(30);
-        finderView.setOnBitmapButtonClickListener(new View.OnClickListener() {
+    protected ScanDelegateImpl newInstanceScanDelegate(Context ctx) {
+        return new ZbarScanDelegateImpl(mCtx = this) {
             @Override
-            public void onClick(View view) {
+            public void handleResult(Result result) {
                 finish();
+                ToastUtils.instance().show(result.getContents());
             }
-        });
+            @Override
+            protected void setViewFinderView(LakViewFinderView finderView) {
+                CtrlTools instance = CtrlTools.instance(mCtx);
+                finderView.setBitmapButton(R.mipmap.i_scan_close,
+                        new Point(instance.dp2px(30), instance.dp2px(30)));
+                finderView.setMessageText("将要扫的二维码放入取景框中，自动识别");
+                finderView.setMessageFontSize(14);
+                finderView.setMessageMarginDp(30);
+                finderView.setOnBitmapButtonClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                    }
+                });
+            }
+        };
     }
-
-
 
 }
