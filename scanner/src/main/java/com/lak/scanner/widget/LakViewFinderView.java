@@ -354,7 +354,15 @@ public class LakViewFinderView extends ViewFinderView {
 
     // 是否停止扫描线绘制
     public void stopLaser(boolean isStop) {
-        this.isStop = isStop;
+        if (!(this.isStop = isStop)) {
+            Rect framingRect = getFramingRect();
+            mLaserLocation = 0;
+            postInvalidateDelayed(ANIMATION_DELAY,
+                    framingRect.left - POINT_SIZE,
+                    framingRect.top - POINT_SIZE,
+                    framingRect.right + POINT_SIZE,
+                    framingRect.bottom + POINT_SIZE);
+        }
     }
 
     private float downX = -1, downY = -1;

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.lak.scanner.R;
+import com.lak.utils.ReflectUtils;
 
 import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -68,15 +69,9 @@ public class ZxingScannerCtrl extends ZXingScannerView {
     }
 
     @Override
-    public void startCamera() {
+    public void resumeCameraPreview(ResultHandler resultHandler) {
         startLaser();
-        super.startCamera();
-    }
-
-    @Override
-    public void startCamera(int cameraId) {
-        startLaser();
-        super.startCamera(cameraId);
+        super.resumeCameraPreview(resultHandler);
     }
 
     @Override
@@ -85,25 +80,30 @@ public class ZxingScannerCtrl extends ZXingScannerView {
         super.stopCameraPreview();
     }
 
-    @Override
-    public void stopCamera() {
-        stopLaser();
-        super.stopCamera();
+    private IViewFinder getViewFinder() {
+        if (mFinderView == null) {
+            synchronized (ZbarScannerCtrl.class) {
+                if (mFinderView == null)
+                    mFinderView = ReflectUtils.getDeclaredField(this, "mViewFinderView");
+            }
+        }
+        return mFinderView;
     }
 
     // 停止扫描线移动
     private void stopLaser() {
-        if (mFinderView != null
-                && mFinderView instanceof LakViewFinderView) {
-            ((LakViewFinderView) mFinderView).stopLaser(true);
+        if (getViewFinder() != null
+                && getViewFinder() instanceof LakViewFinderView) {
+            ((LakViewFinderView) getViewFinder()).stopLaser(true);
         }
     }
 
     // 开始扫描线移动
     private void startLaser() {
-        if (mFinderView != null
-                && mFinderView instanceof LakViewFinderView) {
-            ((LakViewFinderView) mFinderView).stopLaser(false);
+        if (getViewFinder() != null
+                && getViewFinder() instanceof LakViewFinderView) {
+            ((LakViewFinderView) getViewFinder()).stopLaser(false);
         }
     }
+
 }

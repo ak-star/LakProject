@@ -1,5 +1,7 @@
 package com.lak.utils;
 
+import android.support.annotation.NonNull;
+
 import java.lang.reflect.Field;
 
 /**
@@ -16,25 +18,24 @@ public final class ReflectUtils {
     /**
      * 反射获得指定类中的属性
      *
-     * @param tempClazz 反射对象
-     * @param fieldStr  反射对象中的属性
-     * @param <T>       属性的类型
+     * @param instance 反射对象
+     * @param fieldStr 反射对象中的属性
+     * @param <T>      属性的类型
      * @return 返回所找到的指定属性，未找到返回null
      */
-    public static <T> T getDeclaredField(final Class tempClazz, final String fieldStr) {
+    public static <T> T getDeclaredField(@NonNull final Object instance, @NonNull final String fieldStr) {
         T result = null;
-        if (tempClazz != null) {
-            Class tempClass = tempClazz;
+        if (instance != null) {
+            Class tempClass = instance.getClass();
             while (tempClass != null) { //当父类为null的时候说明到达了最上层的父类(Object类).
                 try {
                     Field field = tempClass.getDeclaredField(fieldStr);
                     field.setAccessible(true);
-                    result = (T) field.get(tempClass);
+                    result = (T) field.get(instance);
                     break;
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 } catch (NoSuchFieldException e) {
-                    e.printStackTrace();
                 }
                 tempClass = tempClass.getSuperclass(); //得到父类,然后赋给自己
             }

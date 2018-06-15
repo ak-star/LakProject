@@ -7,10 +7,8 @@ import android.support.annotation.ColorRes;
 import android.view.View;
 
 import com.lak.scanner.delegate.ScanDelegate;
-import com.lak.scanner.widget.LakViewFinderView;
 
 import me.dm7.barcodescanner.core.BarcodeScannerView;
-import me.dm7.barcodescanner.core.IViewFinder;
 
 /**
  * Created by lawrence on 2018/6/14.
@@ -18,7 +16,7 @@ import me.dm7.barcodescanner.core.IViewFinder;
  * 二维码扫描代理实现
  */
 
-public abstract class ScanDelegateImpl implements ScanDelegate {
+public abstract class ScanDelegateImpl<SCANNER extends BarcodeScannerView> implements ScanDelegate {
     private static final String FLASH_STATE = "FLASH_STATE";
     private static final String AUTO_FOCUS_STATE = "AUTO_FOCUS_STATE";
     private static final String BORDER_COLOR = "BORDER_COLOR";
@@ -27,7 +25,7 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
     private static final String SQUARE_FINDER = "SQUARE_FINDER";
 
     protected Context mCtx = null;
-    protected BarcodeScannerView mScannerView;
+    protected SCANNER mScannerView;
 
     protected boolean mFlash;         // 闪光灯
     protected boolean mAutoFocus;     // 自动化对焦
@@ -36,21 +34,10 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
     protected boolean mLaserEnabled = true;     // 扫描框中激光线是否显示
     protected boolean mSquareViewFinder = true;   // 扫描框是正方形
 
-    protected abstract BarcodeScannerView setScannerCtrl(Context ctx);
-    // 此抽象接口与newViewFinder()关联使用
-    protected abstract void setViewFinderView(LakViewFinderView finderView);
+    protected abstract SCANNER setScannerCtrl(Context ctx);
 
     public ScanDelegateImpl(Context ctx) {
         mCtx = ctx;
-    }
-
-    // 构造一个默认实现 IViewFinder 接口的对象
-    protected IViewFinder newViewFinder(Context ctx) {
-        LakViewFinderView viewFinder = new LakViewFinderView(ctx);
-        viewFinder.setBorderColor(mBorderColor);    // 扫描框边框颜色
-        viewFinder.setLaserColor(mLaserColor);      // 扫描框内，扫描线颜色
-        setViewFinderView(viewFinder);
-        return viewFinder;
     }
 
     @Override
@@ -74,7 +61,7 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
         return mScannerView;
     }
 
-    private void noNullScannerView(BarcodeScannerView scannerView) {
+    private void noNullScannerView(SCANNER scannerView) {
         if (scannerView == null)
             throw new NullPointerException("setScannerCtrl() can not return null.");
     }
@@ -98,6 +85,12 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
             mScannerView.stopCameraPreview();
             mScannerView.stopCamera();
         }
+    }
+
+    @Override
+    public void stopCameraPreview() {
+        if (mScannerView != null)
+            mScannerView.stopCameraPreview();
     }
 
     @Override
@@ -140,7 +133,7 @@ public abstract class ScanDelegateImpl implements ScanDelegate {
         return this;
     }
 
-    public BarcodeScannerView getScannerView() {
+    public SCANNER getScannerView() {
         return mScannerView;
     }
 

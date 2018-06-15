@@ -15,6 +15,7 @@ import com.lak.scanner.impl.ZbarScanDelegateImpl;
 import com.lak.scanner.widget.LakViewFinderView;
 import com.lak.tools.display.CtrlTools;
 
+import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.zbar.Result;
 
 /**
@@ -38,23 +39,34 @@ public class TestScanActivity extends ScanActivity {
         return new ZbarScanDelegateImpl(mCtx = this) {
             @Override
             public void handleResult(Result result) {
-                finish();
+//                finish();
                 ToastUtils.instance().show(result.getContents());
-            }
-            @Override
-            protected void setViewFinderView(LakViewFinderView finderView) {
-                CtrlTools instance = CtrlTools.instance(mCtx);
-                finderView.setBitmapButton(R.mipmap.i_scan_close,
-                        new Point(instance.dp2px(30), instance.dp2px(30)));
-                finderView.setMessageText("将要扫的二维码放入取景框中，自动识别");
-                finderView.setMessageFontSize(14);
-                finderView.setMessageMarginDp(30);
-                finderView.setOnBitmapButtonClickListener(new View.OnClickListener() {
+                mProxy.getScannerView().postDelayed(new Runnable() {
                     @Override
-                    public void onClick(View view) {
-                        finish();
+                    public void run() {
+                        resumeCameraPreview();
                     }
-                });
+                }, 3000);
+            }
+
+            @Override
+            protected void setFinderView(IViewFinder finderView) {
+                if (finderView instanceof LakViewFinderView) {
+                    LakViewFinderView lakFinderView = (LakViewFinderView) finderView;
+
+                    CtrlTools instance = CtrlTools.instance(mCtx);
+                    lakFinderView.setBitmapButton(R.mipmap.i_scan_close,
+                            new Point(instance.dp2px(30), instance.dp2px(30)));
+                    lakFinderView.setMessageText("将要扫的二维码放入取景框中，自动识别");
+                    lakFinderView.setMessageFontSize(14);
+                    lakFinderView.setMessageMarginDp(30);
+                    lakFinderView.setOnBitmapButtonClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            finish();
+                        }
+                    });
+                }
             }
         };
     }

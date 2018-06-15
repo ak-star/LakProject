@@ -32,10 +32,20 @@ public abstract class ScanActivity extends AppCompatActivity {
         mProxy.onResume();
     }
 
+    // 恢复预览
+    public void resumeCameraPreview() {
+        mProxy.resumeCameraPreview();
+    }
+
     @Override
     protected void onPause() {
         super.onPause();
         mProxy.onPause();
+    }
+
+    // 停止预览
+    public void stopCameraPreview() {
+        mProxy.stopCameraPreview();
     }
 
     @Override

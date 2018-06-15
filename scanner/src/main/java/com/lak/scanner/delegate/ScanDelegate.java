@@ -22,4 +22,10 @@ public interface ScanDelegate {
     // 存储相机相关设置
     void onSaveInstanceState(Bundle outState);
 
+    // 恢复预览
+    void resumeCameraPreview();
+
+    // 停止预览
+    void stopCameraPreview();
+
 }

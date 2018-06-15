@@ -54,10 +54,20 @@ public abstract class ScanFragment extends Fragment {
         mProxy.onResume();
     }
 
+    // 恢复预览
+    public void resumeCameraPreview() {
+        mProxy.resumeCameraPreview();
+    }
+
     @Override
     public void onPause() {
         super.onPause();
         mProxy.onPause();
+    }
+
+    // 停止预览
+    public void stopCameraPreview() {
+        mProxy.stopCameraPreview();
     }
 
     @Override
