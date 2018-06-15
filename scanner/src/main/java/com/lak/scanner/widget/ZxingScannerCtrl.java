@@ -82,7 +82,7 @@ public class ZxingScannerCtrl extends ZXingScannerView {
 
     private IViewFinder getViewFinder() {
         if (mFinderView == null) {
-            synchronized (ZbarScannerCtrl.class) {
+            synchronized (ZxingScannerCtrl.class) {
                 if (mFinderView == null)
                     mFinderView = ReflectUtils.getDeclaredField(this, "mViewFinderView");
             }
