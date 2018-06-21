@@ -1,11 +1,11 @@
-package com.lak;
+package com.lak.test.scanner;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import com.lak.scanner.impl.ScanDelegateImpl;
+import com.lxh.scanz.zxing.scanner.impl.ScanDelegateImpl;
 
 /**
  * Created by lawrence on 2018/6/11.

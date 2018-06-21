@@ -34,8 +34,10 @@ dependencies {
     // dagger2 解耦
     compile "com.google.dagger:dagger:$rootProject.dagger2Version"
     annotationProcessor "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
-    //
-    api project(':tools')
+    // UI适配，及常用工具
+    compile 'com.github.ak-star:tools:v1.0.0'
+    // 二维码，扫一扫
+    compile 'com.github.ak-star:zxing:v1.0.1'
+
     implementation files('libs/nineoldandroids-2.4.0.jar')
-    api project(':logger')
 }

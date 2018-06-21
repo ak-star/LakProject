@@ -27,7 +27,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".TestScanActivity"
+            android:name="com.lak.test.TestScanActivity"
             android:screenOrientation="portrait" />
 
         <meta-data

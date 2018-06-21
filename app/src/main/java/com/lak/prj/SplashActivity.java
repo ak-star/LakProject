@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.lak.test.TestScanActivity;
+
 /**
  * Created by lawrence on 2018/4/10.
  */

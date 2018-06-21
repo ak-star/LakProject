@@ -1,4 +1,4 @@
-package com.lak.prj;
+package com.lak.test;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,15 +8,16 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.lak.ScanActivity;
+import com.google.zxing.Result;
 import com.lak.core.tools.ToastUtils;
-import com.lak.scanner.impl.ScanDelegateImpl;
-import com.lak.scanner.impl.ZbarScanDelegateImpl;
-import com.lak.scanner.widget.LakViewFinderView;
+import com.lak.prj.R;
+import com.lak.test.scanner.ScanActivity;
 import com.lak.tools.display.CtrlTools;
+import com.lxh.scanz.zxing.scanner.impl.ScanDelegateImpl;
+import com.lxh.scanz.zxing.scanner.impl.ZxingScanDelegateImpl;
+import com.lxh.scanz.zxing.scanner.widget.LakViewFinderView;
 
 import me.dm7.barcodescanner.core.IViewFinder;
-import me.dm7.barcodescanner.zbar.Result;
 
 /**
  * Created by lawrence on 2018/6/11.
@@ -36,11 +37,11 @@ public class TestScanActivity extends ScanActivity {
 
     @Override
     protected ScanDelegateImpl newInstanceScanDelegate(Context ctx) {
-        return new ZbarScanDelegateImpl(mCtx = this) {
+        return new ZxingScanDelegateImpl(mCtx = this) {
             @Override
             public void handleResult(Result result) {
 //                finish();
-                ToastUtils.instance().show(result.getContents());
+                ToastUtils.instance().show(result.getText());
                 mProxy.getScannerView().postDelayed(new Runnable() {
                     @Override
                     public void run() {

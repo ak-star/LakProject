@@ -6,7 +6,7 @@
     android:background="@color/c_eeeeee"
     android:orientation="vertical">
 
-    <android.support.v7.widget.Toolbar
+    <com.lak.autolayout.layout.AutoToolbar
         android:layout_width="match_parent"
         android:layout_height="100px"
         android:background="@color/c_white"
@@ -19,7 +19,7 @@
             android:text="扫描二维码"
             android:textColor="@color/c_2d2d2d"
             android:textSize="30px" />
-    </android.support.v7.widget.Toolbar>
+    </com.lak.autolayout.layout.AutoToolbar>
 
     <com.lak.autolayout.layout.AutoFrameLayout
         android:id="@+id/scan_panel"
